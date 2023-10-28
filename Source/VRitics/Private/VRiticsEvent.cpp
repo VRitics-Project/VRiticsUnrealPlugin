@@ -1,6 +1,25 @@
+﻿// Fill out your copyright notice in the Description page of Project Settings.
+
+
 #include "VRiticsEvent.h"
 
-FString FVRiticsEvent::ToJsonFormat()
+
+VRiticsEvent::VRiticsEvent()
+{
+}
+
+VRiticsEvent::VRiticsEvent(FString name, FVector3f position, bool isSuccessful)
+{
+	Name = name;
+	Position = position;
+	bIsSuccessful = isSuccessful;
+}
+
+VRiticsEvent::~VRiticsEvent()
+{
+}
+
+FString VRiticsEvent::ToJsonFormat()
 {
 	FString json = "{";
 	json.Append("\"object_id\":\"");

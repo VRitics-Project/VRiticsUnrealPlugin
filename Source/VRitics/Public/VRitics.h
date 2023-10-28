@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "VRiticsSession.h"
 #include "Modules/ModuleManager.h"
 
 class FVRiticsModule : public IModuleInterface
