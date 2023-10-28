@@ -1,0 +1,12 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-VRitics.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Users\topto\OneDrive\Dokumenty\Unreal Projects\VRiticsTest\Intermediate\Build\Win64\x64\VRiticsTestEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.InclOrderUnreal5_0.h.obj"
+"C:\Users\topto\OneDrive\Dokumenty\Unreal Projects\VRiticsTest\Plugins\VRitics\Intermediate\Build\Win64\x64\UnrealEditor\Development\VRitics\Module.VRitics.cpp.obj"
+"C:\Users\topto\OneDrive\Dokumenty\Unreal Projects\VRiticsTest\Plugins\VRitics\Intermediate\Build\Win64\x64\UnrealEditor\Development\VRitics\Default.rc2.res"
+/OUT:"C:\Users\topto\OneDrive\Dokumenty\Unreal Projects\VRiticsTest\Plugins\VRitics\Intermediate\Build\Win64\x64\UnrealEditor\Development\VRitics\UnrealEditor-VRitics.lib"

@@ -1,0 +1,20 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\topto\\onedrive\\dokumenty\\unreal projects\\vriticstest\\plugins\\vritics\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\vritics\\module.vritics.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\topto\\onedrive\\dokumenty\\unreal projects\\vriticstest\\intermediate\\build\\win64\\x64\\vriticstesteditor\\development\\engine\\sharedpch.engine.shadowerrors.inclorderunreal5_0.h.pch",
+        "Includes": [
+            "c:\\users\\topto\\onedrive\\dokumenty\\unreal projects\\vriticstest\\plugins\\vritics\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\vritics\\definitions.vritics.h",
+            "c:\\users\\topto\\onedrive\\dokumenty\\unreal projects\\vriticstest\\plugins\\vritics\\intermediate\\build\\win64\\unrealeditor\\inc\\vritics\\uht\\vritics.init.gen.cpp",
+            "c:\\users\\topto\\onedrive\\dokumenty\\unreal projects\\vriticstest\\plugins\\vritics\\intermediate\\build\\win64\\unrealeditor\\inc\\vritics\\uht\\vriticsbplibrary.gen.cpp",
+            "c:\\users\\topto\\onedrive\\dokumenty\\unreal projects\\vriticstest\\plugins\\vritics\\source\\vritics\\public\\vriticsbplibrary.h",
+            "c:\\users\\topto\\onedrive\\dokumenty\\unreal projects\\vriticstest\\plugins\\vritics\\intermediate\\build\\win64\\unrealeditor\\inc\\vritics\\uht\\vriticsbplibrary.generated.h",
+            "c:\\users\\topto\\onedrive\\dokumenty\\unreal projects\\vriticstest\\plugins\\vritics\\source\\vritics\\private\\vritics.cpp",
+            "c:\\users\\topto\\onedrive\\dokumenty\\unreal projects\\vriticstest\\plugins\\vritics\\source\\vritics\\public\\vritics.h",
+            "c:\\users\\topto\\onedrive\\dokumenty\\unreal projects\\vriticstest\\plugins\\vritics\\source\\vritics\\private\\vriticsbplibrary.cpp"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

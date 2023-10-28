@@ -1,0 +1,11 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.VRitics.cpp.obj": [
+			"VRitics.init.gen.cpp.obj",
+			"VRiticsBPLibrary.gen.cpp.obj",
+			"VRitics.cpp.obj",
+			"VRiticsBPLibrary.cpp.obj"
+		]
+	}
+}
