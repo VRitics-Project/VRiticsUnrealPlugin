@@ -17,5 +17,6 @@ public:
 
 	FString Name;
 	FVector3f Position;
+	FDateTime DateTime;
 	bool bIsSuccessful;
 };

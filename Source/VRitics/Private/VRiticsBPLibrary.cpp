@@ -14,7 +14,7 @@ UVRiticsBPLibrary::UVRiticsBPLibrary(const FObjectInitializer& ObjectInitializer
 
 void UVRiticsBPLibrary::Setup(FString PlayerName, FString AppID, FString Token)
 {
-	UVRiticsSetup(PlayerName, AppID, Token);
+	UVRiticsSetup::Init(PlayerName, AppID, Token);
 }
 
 void UVRiticsBPLibrary::RegisterEvent(FVector3f Position, FString Name, bool bIsSuccessful)

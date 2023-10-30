@@ -12,7 +12,7 @@ UVRiticsSetup::~UVRiticsSetup()
 {
 }
 
-UVRiticsSetup::UVRiticsSetup(FString playerId, FString appId, FString token)
+void UVRiticsSetup::Init(FString playerId, FString appId, FString token)
 {
 	PlayerID = playerId;
 	AppID = appId;

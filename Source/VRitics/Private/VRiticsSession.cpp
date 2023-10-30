@@ -2,13 +2,13 @@
 
 #include "HttpModule.h"
 #include "VRiticsSetup.h"
+#include "Interfaces/IHttpResponse.h"
 
 TArray<VRiticsSession> VRiticsSession::CurrentSessions;
 class FHttpModule;
 
 VRiticsSession::VRiticsSession()
 {
-	// Events = TArray<VRiticsEvent>();
 }
 
 VRiticsSession::~VRiticsSession()
@@ -18,7 +18,7 @@ VRiticsSession::~VRiticsSession()
 VRiticsSession::VRiticsSession(FString name)
 {
 	Name = name;
-
+	SceneName = "SceneWithEvents";
 }
 
 void VRiticsSession::AddSession(FString name)
@@ -28,35 +28,35 @@ void VRiticsSession::AddSession(FString name)
 
 void VRiticsSession::RegisterEvent(FString name, FVector3f position , bool isSuccessful)
 {
-	for (auto Session : CurrentSessions)
+	for (int i = 0; i < CurrentSessions.Num(); ++i)
 	{
-		Session.Events.Add(VRiticsEvent(name, position, isSuccessful));
+		CurrentSessions[i].Events.Add(VRiticsEvent(name, position, isSuccessful));
 	}
 }
 
 void VRiticsSession::SendSessions()
 {
-	for (auto currentSession : CurrentSessions)
+	for (int i = CurrentSessions.Num()-1; i >= 0; i--)
 	{
 		FString RequestContent = "{";
-
 		RequestContent.Append ("\"player_id\": \"");
 		RequestContent.Append (UVRiticsSetup::PlayerID);
 		RequestContent.Append ("\",\n");
 
 		RequestContent.Append ("\"session_name\": \"");
-		RequestContent.Append (currentSession.Name);
+		RequestContent.Append (CurrentSessions[i].Name);
 		RequestContent.Append ("\",\n");
 
 		RequestContent.Append ("\"unity_scene_name\": \"");
-		RequestContent.Append (currentSession.SceneName);
+		RequestContent.Append (CurrentSessions[i].SceneName);
 		RequestContent.Append ("\",\n");
 
 		RequestContent.Append ("\"data\": [\n");
-		for (int i = 0; i < currentSession.Events.Num(); i++) {
-			RequestContent.Append (currentSession.Events[i].ToJsonFormat ());
-			if (i < currentSession.Events.Num() - 1)
+		for (int j = CurrentSessions[i].Events.Num()-1; j >= 0; j--) {
+			RequestContent.Append (CurrentSessions[i].Events[j].ToJsonFormat ());
+			if (j > 0)
 				RequestContent.Append (",\n");
+			CurrentSessions[i].Events.RemoveAt(j);
 		}
 		RequestContent.Append ("],\n");
 		RequestContent.Append (" \"custom_data\": {\n");
@@ -73,8 +73,9 @@ void VRiticsSession::SendSessions()
 
 		pRequest->SetVerb(TEXT("POST"));
 		pRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
-		pRequest->SetHeader(TEXT("Authorization"), TEXT("Bearer"+UVRiticsSetup::Token));
+		pRequest->SetHeader(TEXT("Authorization"), TEXT("Bearer "+UVRiticsSetup::Token));
 		pRequest->SetContentAsString(RequestContent);
+		UE_LOG(LogTemp, Display, TEXT("%s"), *RequestContent);
 
 		pRequest->SetURL(uri);
 
@@ -85,7 +86,8 @@ void VRiticsSession::SendSessions()
 		        bool connectedSuccessfully) mutable {
 
 		    if (connectedSuccessfully) {
-		    	UE_LOG(LogTemp, Error, TEXT("Succsess."));
+		    	auto response = pResponse->GetContentAsString();
+		    	UE_LOG(LogTemp, Display, TEXT("%s"), *response);
 		    }
 		    else {
 		        switch (pRequest->GetStatus()) {
@@ -98,5 +100,6 @@ void VRiticsSession::SendSessions()
 		});
 
 		pRequest->ProcessRequest();
+		CurrentSessions.RemoveAt(i);
 	}
 }

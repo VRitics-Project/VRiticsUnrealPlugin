@@ -16,7 +16,7 @@ class VRITICS_API UVRiticsSetup : public UObject
 public:
 	UVRiticsSetup();
 	~UVRiticsSetup();
-	UVRiticsSetup(FString, FString, FString);
+	static void Init(FString, FString, FString);
 
 	static FString PlayerID;
 	static FString AppID;
