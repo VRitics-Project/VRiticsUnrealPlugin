@@ -1,5 +1,6 @@
 ﻿#include "VRiticsSession.h"
 
+#include "HeadMountedDisplayFunctionLibrary.h"
 #include "HttpModule.h"
 #include "VRiticsSetup.h"
 #include "Interfaces/IHttpResponse.h"
@@ -50,7 +51,12 @@ void VRiticsSession::SendSessions()
 		RequestContent.Append ("\"unity_scene_name\": \"");
 		RequestContent.Append (CurrentSessions[i].SceneName);
 		RequestContent.Append ("\",\n");
-
+		
+		RequestContent.Append ("\"device\": \"");
+		FName DeviceName = UHeadMountedDisplayFunctionLibrary::GetHMDDeviceName();
+		RequestContent.Append (DeviceName.ToString());
+		RequestContent.Append ("\",\n");
+		
 		RequestContent.Append ("\"data\": [\n");
 		for (int j = CurrentSessions[i].Events.Num()-1; j >= 0; j--) {
 			RequestContent.Append (CurrentSessions[i].Events[j].ToJsonFormat ());
