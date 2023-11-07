@@ -38,7 +38,8 @@ public class VRitics : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-				"HTTP"
+				"HTTP",
+				"HeadMountedDisplay"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
