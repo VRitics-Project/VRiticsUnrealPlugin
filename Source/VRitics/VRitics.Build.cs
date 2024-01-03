@@ -25,7 +25,8 @@ public class VRitics : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core",
+				"Core", "WorkspaceMenuStructure",
+				"WorkspaceMenuStructure",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -39,7 +40,8 @@ public class VRitics : ModuleRules
 				"Slate",
 				"SlateCore",
 				"HTTP",
-				"HeadMountedDisplay"
+				"HeadMountedDisplay",
+				"EditorStyle"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

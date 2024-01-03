@@ -9,63 +9,206 @@
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeVRiticsBPLibrary() {}
 // Cross Module References
+	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector3f();
 	ENGINE_API UClass* Z_Construct_UClass_UBlueprintFunctionLibrary();
 	UPackage* Z_Construct_UPackage__Script_VRitics();
 	VRITICS_API UClass* Z_Construct_UClass_UVRiticsBPLibrary();
 	VRITICS_API UClass* Z_Construct_UClass_UVRiticsBPLibrary_NoRegister();
 // End Cross Module References
-	DEFINE_FUNCTION(UVRiticsBPLibrary::execVRiticsSampleFunction)
+	DEFINE_FUNCTION(UVRiticsBPLibrary::execSendSession)
 	{
-		P_GET_PROPERTY(FFloatProperty,Z_Param_Param);
 		P_FINISH;
 		P_NATIVE_BEGIN;
-		*(float*)Z_Param__Result=UVRiticsBPLibrary::VRiticsSampleFunction(Z_Param_Param);
+		UVRiticsBPLibrary::SendSession();
+		P_NATIVE_END;
+	}
+	DEFINE_FUNCTION(UVRiticsBPLibrary::execStartSession)
+	{
+		P_GET_PROPERTY(FStrProperty,Z_Param_Name);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		UVRiticsBPLibrary::StartSession(Z_Param_Name);
+		P_NATIVE_END;
+	}
+	DEFINE_FUNCTION(UVRiticsBPLibrary::execRegisterEvent)
+	{
+		P_GET_STRUCT(FVector3f,Z_Param_Position);
+		P_GET_PROPERTY(FStrProperty,Z_Param_Name);
+		P_GET_UBOOL(Z_Param_bIsSuccessful);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		UVRiticsBPLibrary::RegisterEvent(Z_Param_Position,Z_Param_Name,Z_Param_bIsSuccessful);
+		P_NATIVE_END;
+	}
+	DEFINE_FUNCTION(UVRiticsBPLibrary::execSetup)
+	{
+		P_GET_PROPERTY(FStrProperty,Z_Param_PlayerID);
+		P_GET_PROPERTY(FStrProperty,Z_Param_AppID);
+		P_GET_PROPERTY(FStrProperty,Z_Param_Token);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		UVRiticsBPLibrary::Setup(Z_Param_PlayerID,Z_Param_AppID,Z_Param_Token);
 		P_NATIVE_END;
 	}
 	void UVRiticsBPLibrary::StaticRegisterNativesUVRiticsBPLibrary()
 	{
 		UClass* Class = UVRiticsBPLibrary::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
-			{ "VRiticsSampleFunction", &UVRiticsBPLibrary::execVRiticsSampleFunction },
+			{ "RegisterEvent", &UVRiticsBPLibrary::execRegisterEvent },
+			{ "SendSession", &UVRiticsBPLibrary::execSendSession },
+			{ "Setup", &UVRiticsBPLibrary::execSetup },
+			{ "StartSession", &UVRiticsBPLibrary::execStartSession },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 	}
-	struct Z_Construct_UFunction_UVRiticsBPLibrary_VRiticsSampleFunction_Statics
+	struct Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics
 	{
-		struct VRiticsBPLibrary_eventVRiticsSampleFunction_Parms
+		struct VRiticsBPLibrary_eventRegisterEvent_Parms
 		{
-			float Param;
-			float ReturnValue;
+			FVector3f Position;
+			FString Name;
+			bool bIsSuccessful;
 		};
-		static const UECodeGen_Private::FFloatPropertyParams NewProp_Param;
-		static const UECodeGen_Private::FFloatPropertyParams NewProp_ReturnValue;
+		static const UECodeGen_Private::FStructPropertyParams NewProp_Position;
+		static const UECodeGen_Private::FStrPropertyParams NewProp_Name;
+		static void NewProp_bIsSuccessful_SetBit(void* Obj);
+		static const UECodeGen_Private::FBoolPropertyParams NewProp_bIsSuccessful;
 		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
 #endif
 		static const UECodeGen_Private::FFunctionParams FuncParams;
 	};
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_VRiticsSampleFunction_Statics::NewProp_Param = { "Param", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(VRiticsBPLibrary_eventVRiticsSampleFunction_Parms, Param), METADATA_PARAMS(nullptr, 0) };
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_VRiticsSampleFunction_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(VRiticsBPLibrary_eventVRiticsSampleFunction_Parms, ReturnValue), METADATA_PARAMS(nullptr, 0) };
-	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UVRiticsBPLibrary_VRiticsSampleFunction_Statics::PropPointers[] = {
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UVRiticsBPLibrary_VRiticsSampleFunction_Statics::NewProp_Param,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UVRiticsBPLibrary_VRiticsSampleFunction_Statics::NewProp_ReturnValue,
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::NewProp_Position = { "Position", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(VRiticsBPLibrary_eventRegisterEvent_Parms, Position), Z_Construct_UScriptStruct_FVector3f, METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::NewProp_Name = { "Name", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(VRiticsBPLibrary_eventRegisterEvent_Parms, Name), METADATA_PARAMS(nullptr, 0) };
+	void Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::NewProp_bIsSuccessful_SetBit(void* Obj)
+	{
+		((VRiticsBPLibrary_eventRegisterEvent_Parms*)Obj)->bIsSuccessful = 1;
+	}
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::NewProp_bIsSuccessful = { "bIsSuccessful", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, sizeof(bool), sizeof(VRiticsBPLibrary_eventRegisterEvent_Parms), &Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::NewProp_bIsSuccessful_SetBit, METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::NewProp_Position,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::NewProp_Name,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::NewProp_bIsSuccessful,
 	};
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UVRiticsBPLibrary_VRiticsSampleFunction_Statics::Function_MetaDataParams[] = {
-		{ "Category", "VRiticsTesting" },
-		{ "DisplayName", "Execute Sample function" },
-		{ "Keywords", "VRitics sample test testing" },
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::Function_MetaDataParams[] = {
+		{ "Category", "VRitics" },
+		{ "DisplayName", "RegisterEvent" },
+		{ "Keywords", "VRitics register event" },
 		{ "ModuleRelativePath", "Public/VRiticsBPLibrary.h" },
 	};
 #endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UVRiticsBPLibrary_VRiticsSampleFunction_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UVRiticsBPLibrary, nullptr, "VRiticsSampleFunction", nullptr, nullptr, sizeof(Z_Construct_UFunction_UVRiticsBPLibrary_VRiticsSampleFunction_Statics::VRiticsBPLibrary_eventVRiticsSampleFunction_Parms), Z_Construct_UFunction_UVRiticsBPLibrary_VRiticsSampleFunction_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_VRiticsSampleFunction_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UVRiticsBPLibrary_VRiticsSampleFunction_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_VRiticsSampleFunction_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_UVRiticsBPLibrary_VRiticsSampleFunction()
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UVRiticsBPLibrary, nullptr, "RegisterEvent", nullptr, nullptr, sizeof(Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::VRiticsBPLibrary_eventRegisterEvent_Parms), Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04822401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent()
 	{
 		static UFunction* ReturnFunction = nullptr;
 		if (!ReturnFunction)
 		{
-			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UVRiticsBPLibrary_VRiticsSampleFunction_Statics::FuncParams);
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_UVRiticsBPLibrary_SendSession_Statics
+	{
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UVRiticsBPLibrary_SendSession_Statics::Function_MetaDataParams[] = {
+		{ "Category", "VRitics" },
+		{ "DisplayName", "SendSession" },
+		{ "Keywords", "VRitics send session" },
+		{ "ModuleRelativePath", "Public/VRiticsBPLibrary.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UVRiticsBPLibrary_SendSession_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UVRiticsBPLibrary, nullptr, "SendSession", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UVRiticsBPLibrary_SendSession_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_SendSession_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UVRiticsBPLibrary_SendSession()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UVRiticsBPLibrary_SendSession_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics
+	{
+		struct VRiticsBPLibrary_eventSetup_Parms
+		{
+			FString PlayerID;
+			FString AppID;
+			FString Token;
+		};
+		static const UECodeGen_Private::FStrPropertyParams NewProp_PlayerID;
+		static const UECodeGen_Private::FStrPropertyParams NewProp_AppID;
+		static const UECodeGen_Private::FStrPropertyParams NewProp_Token;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::NewProp_PlayerID = { "PlayerID", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(VRiticsBPLibrary_eventSetup_Parms, PlayerID), METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::NewProp_AppID = { "AppID", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(VRiticsBPLibrary_eventSetup_Parms, AppID), METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::NewProp_Token = { "Token", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(VRiticsBPLibrary_eventSetup_Parms, Token), METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::NewProp_PlayerID,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::NewProp_AppID,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::NewProp_Token,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::Function_MetaDataParams[] = {
+		{ "Category", "VRitics" },
+		{ "DisplayName", "Setup" },
+		{ "Keywords", "VRitics setup" },
+		{ "ModuleRelativePath", "Public/VRiticsBPLibrary.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UVRiticsBPLibrary, nullptr, "Setup", nullptr, nullptr, sizeof(Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::VRiticsBPLibrary_eventSetup_Parms), Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UVRiticsBPLibrary_Setup()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics
+	{
+		struct VRiticsBPLibrary_eventStartSession_Parms
+		{
+			FString Name;
+		};
+		static const UECodeGen_Private::FStrPropertyParams NewProp_Name;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::NewProp_Name = { "Name", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(VRiticsBPLibrary_eventStartSession_Parms, Name), METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::NewProp_Name,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::Function_MetaDataParams[] = {
+		{ "Category", "VRitics" },
+		{ "DisplayName", "StartSession" },
+		{ "Keywords", "VRitics start session" },
+		{ "ModuleRelativePath", "Public/VRiticsBPLibrary.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UVRiticsBPLibrary, nullptr, "StartSession", nullptr, nullptr, sizeof(Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::VRiticsBPLibrary_eventStartSession_Parms), Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_UVRiticsBPLibrary_StartSession()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -89,14 +232,15 @@ void EmptyLinkFunctionForGeneratedCodeVRiticsBPLibrary() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_VRitics,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_UVRiticsBPLibrary_Statics::FuncInfo[] = {
-		{ &Z_Construct_UFunction_UVRiticsBPLibrary_VRiticsSampleFunction, "VRiticsSampleFunction" }, // 1074154692
+		{ &Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent, "RegisterEvent" }, // 1680634461
+		{ &Z_Construct_UFunction_UVRiticsBPLibrary_SendSession, "SendSession" }, // 2767794583
+		{ &Z_Construct_UFunction_UVRiticsBPLibrary_Setup, "Setup" }, // 169899660
+		{ &Z_Construct_UFunction_UVRiticsBPLibrary_StartSession, "StartSession" }, // 2826331936
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UVRiticsBPLibrary_Statics::Class_MetaDataParams[] = {
-		{ "Comment", "/* \n*\x09""Function library class.\n*\x09""Each function in it is expected to be static and represents blueprint node that can be called in any blueprint.\n*\n*\x09When declaring function you can define metadata for the node. Key function specifiers will be BlueprintPure and BlueprintCallable.\n*\x09""BlueprintPure - means the function does not affect the owning object in any way and thus creates a node without Exec pins.\n*\x09""BlueprintCallable - makes a function which can be executed in Blueprints - Thus it has Exec pins.\n*\x09""DisplayName - full name of the node, shown when you mouse over the node and in the blueprint drop down menu.\n*\x09\x09\x09\x09Its lets you name the node using characters not allowed in C++ function names.\n*\x09""CompactNodeTitle - the word(s) that appear on the node.\n*\x09Keywords -\x09the list of keywords that helps you to find node when you search for it using Blueprint drop-down menu. \n*\x09\x09\x09\x09Good example is \"Print String\" node which you can find also by using keyword \"log\".\n*\x09""Category -\x09the category your node will be under in the Blueprint drop-down menu.\n*\n*\x09""For more info on custom blueprint nodes visit documentation:\n*\x09https://wiki.unrealengine.com/Custom_Blueprint_Node_Creation\n*/" },
 		{ "IncludePath", "VRiticsBPLibrary.h" },
 		{ "ModuleRelativePath", "Public/VRiticsBPLibrary.h" },
-		{ "ToolTip", "*      Function library class.\n*      Each function in it is expected to be static and represents blueprint node that can be called in any blueprint.\n*\n*      When declaring function you can define metadata for the node. Key function specifiers will be BlueprintPure and BlueprintCallable.\n*      BlueprintPure - means the function does not affect the owning object in any way and thus creates a node without Exec pins.\n*      BlueprintCallable - makes a function which can be executed in Blueprints - Thus it has Exec pins.\n*      DisplayName - full name of the node, shown when you mouse over the node and in the blueprint drop down menu.\n*                              Its lets you name the node using characters not allowed in C++ function names.\n*      CompactNodeTitle - the word(s) that appear on the node.\n*      Keywords -      the list of keywords that helps you to find node when you search for it using Blueprint drop-down menu.\n*                              Good example is \"Print String\" node which you can find also by using keyword \"log\".\n*      Category -      the category your node will be under in the Blueprint drop-down menu.\n*\n*      For more info on custom blueprint nodes visit documentation:\n*      https://wiki.unrealengine.com/Custom_Blueprint_Node_Creation" },
 	};
 #endif
 	const FCppClassTypeInfoStatic Z_Construct_UClass_UVRiticsBPLibrary_Statics::StaticCppClassTypeInfo = {
@@ -136,9 +280,9 @@ void EmptyLinkFunctionForGeneratedCodeVRiticsBPLibrary() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_topto_OneDrive_Dokumenty_Unreal_Projects_VRiticsTest_Plugins_VRitics_Source_VRitics_Public_VRiticsBPLibrary_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UVRiticsBPLibrary, UVRiticsBPLibrary::StaticClass, TEXT("UVRiticsBPLibrary"), &Z_Registration_Info_UClass_UVRiticsBPLibrary, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UVRiticsBPLibrary), 3318715173U) },
+		{ Z_Construct_UClass_UVRiticsBPLibrary, UVRiticsBPLibrary::StaticClass, TEXT("UVRiticsBPLibrary"), &Z_Registration_Info_UClass_UVRiticsBPLibrary, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UVRiticsBPLibrary), 252930381U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_topto_OneDrive_Dokumenty_Unreal_Projects_VRiticsTest_Plugins_VRitics_Source_VRitics_Public_VRiticsBPLibrary_h_3733841311(TEXT("/Script/VRitics"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_topto_OneDrive_Dokumenty_Unreal_Projects_VRiticsTest_Plugins_VRitics_Source_VRitics_Public_VRiticsBPLibrary_h_4037793267(TEXT("/Script/VRitics"),
 		Z_CompiledInDeferFile_FID_Users_topto_OneDrive_Dokumenty_Unreal_Projects_VRiticsTest_Plugins_VRitics_Source_VRitics_Public_VRiticsBPLibrary_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_topto_OneDrive_Dokumenty_Unreal_Projects_VRiticsTest_Plugins_VRitics_Source_VRitics_Public_VRiticsBPLibrary_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);
