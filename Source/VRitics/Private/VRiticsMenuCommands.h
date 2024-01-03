@@ -1,19 +1,19 @@
 ﻿#pragma once
-#include "Framework/Commands/GenericCommands.h"
 
 class FVRiticsMenuCommands final : public TCommands<FVRiticsMenuCommands>
 {
 public:
 	virtual void RegisterCommands() override;
+
 	FVRiticsMenuCommands()
-		: TCommands<FVRiticsMenuCommands>( TEXT("GenericCommands"), NSLOCTEXT("GenericCommands", "Generic Commands", "Common Commands"), NAME_None, FCoreStyle::Get().GetStyleSetName() )
+		: TCommands(TEXT("VRitics Menu Commands"), NSLOCTEXT("VRitics Menu Commands", "VRitics Menu Commands", "VRitics Menu Commands"), NAME_None, FCoreStyle::Get().GetStyleSetName())
 	{
 	}
 
-	virtual ~FVRiticsMenuCommands()
+	virtual ~FVRiticsMenuCommands() override
 	{
 	}
-	
-	TSharedPtr<FUICommandInfo> Clap;
-	TSharedPtr<FUICommandInfo> Clap2;
+
+	TSharedPtr<FUICommandInfo> Introduction;
+	TSharedPtr<FUICommandInfo> ConnectionTest;
 };

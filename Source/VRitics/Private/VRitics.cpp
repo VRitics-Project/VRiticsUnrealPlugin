@@ -4,10 +4,19 @@
 #include "LevelEditor.h"
 #include "Widgets/Docking/SDockTab.h"
 #include "VRiticsMenuCommands.h"
+#include "VRiticsSession.h"
+#include "Widgets/Input/SEditableTextBox.h"
+#include "Widgets/Layout/SScrollBox.h"
+#include "Widgets/Text/SRichTextBlock.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogSimplePlugin, Log, All);
 
-static const FName TabName("ClapTab");
+static const FName IntroductionTabName("Introduction Tab");
+static const FName ConnectionTestTabName("Connection Test Tab");
+
+FText FVRiticsModule::AppID;
+FText FVRiticsModule::Token;
+FText FVRiticsModule::Result;
 
 void FVRiticsModule::StartupModule()
 {
@@ -16,10 +25,15 @@ void FVRiticsModule::StartupModule()
 	TSharedPtr<FUICommandList> MyPluginCommands = MakeShareable(new FUICommandList);
 
 	MyPluginCommands->MapAction(
-		FVRiticsMenuCommands::Get().Clap,
-		FExecuteAction::CreateRaw(this, &FVRiticsModule::OnBtnClicked),
+		FVRiticsMenuCommands::Get().Introduction,
+		FExecuteAction::CreateRaw(this, &FVRiticsModule::OnIntroductionClicked),
 		FCanExecuteAction());
 
+	MyPluginCommands->MapAction(
+		FVRiticsMenuCommands::Get().ConnectionTest,
+		FExecuteAction::CreateRaw(this, &FVRiticsModule::OnConnectionTestClicked),
+		FCanExecuteAction());
+	
 	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
 	MyExtender = MakeShareable(new FExtender);
 	MyExtender->AddToolBarExtension("Settings", EExtensionHook::After, MyPluginCommands, FToolBarExtensionDelegate::CreateRaw(this, &FVRiticsModule::AddToolbarExtension));
@@ -35,15 +49,15 @@ void FVRiticsModule::StartupModule()
 	LevelEditorModule.GetToolBarExtensibilityManager()->AddExtender(MyExtender);
 	LevelEditorModule.GetMenuExtensibilityManager()->AddExtender(MyExtender);
 
-	TSharedRef<class FGlobalTabmanager> TabManager = FGlobalTabmanager::Get();
-	TabManager->RegisterNomadTabSpawner(TabName, FOnSpawnTab::CreateRaw(this, &FVRiticsModule::SpawnTab))
-		.SetDisplayName(FText::FromString(TEXT("Clap")));
+	const TSharedRef<FGlobalTabmanager> TabManager = FGlobalTabmanager::Get();
+	TabManager->RegisterNomadTabSpawner(IntroductionTabName, FOnSpawnTab::CreateRaw(this, &FVRiticsModule::SpawnIntroductionTab))
+		.SetDisplayName(FText::FromString(TEXT("Introduction")));
+	TabManager->RegisterNomadTabSpawner(ConnectionTestTabName, FOnSpawnTab::CreateRaw(this, &FVRiticsModule::SpawnConnectionTestTab))
+	.SetDisplayName(FText::FromString(TEXT("Connection Test")));
 }
 
 void FVRiticsModule::ShutdownModule()
 {
-	// This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
-	// we call this function before unloading the module.
 	FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>("LevelEditor");
 	LevelEditorModule.GetToolBarExtensibilityManager()->RemoveExtender(MyExtender);
 	LevelEditorModule.GetMenuExtensibilityManager()->RemoveExtender(MyExtender);
@@ -51,7 +65,8 @@ void FVRiticsModule::ShutdownModule()
 	FVRiticsMenuCommands::Unregister();
 
 	TSharedRef<class FGlobalTabmanager> tm = FGlobalTabmanager::Get();
-	tm->UnregisterNomadTabSpawner(TabName);
+	tm->UnregisterNomadTabSpawner(IntroductionTabName);
+	tm->UnregisterNomadTabSpawner(ConnectionTestTabName);
 
 }
 
@@ -59,7 +74,7 @@ void FVRiticsModule::AddToolbarExtension(class FToolBarBuilder& Builder)
 {
 #define LOCTEXT_NAMESPACE "LevelEditorToolBar"
 	FSlateIcon IconBrush = FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.ViewOptions", "LevelEditor.ViewOptions.Small");
-	Builder.AddToolBarButton(FVRiticsMenuCommands::Get().Clap, NAME_None, LOCTEXT("MyButton_Override", "Clap"), LOCTEXT("MyButton_ToolTipOverride", "Click to clap"), IconBrush, NAME_None);
+	Builder.AddToolBarButton(FVRiticsMenuCommands::Get().Introduction, NAME_None, LOCTEXT("MyButton_Override", "Clap"), LOCTEXT("MyButton_ToolTipOverride", "Click to clap"), IconBrush, NAME_None);
 #undef LOCTEXT_NAMESPACE
 
 }
@@ -76,10 +91,10 @@ void FVRiticsModule::AddPullDownMenu(FMenuBarBuilder& MenuBuilder)
 
 void FVRiticsModule::FillMenu(FMenuBuilder& MenuBuilder)
 {
-	MenuBuilder.BeginSection("Clap");
+	MenuBuilder.BeginSection("Introduction");
 	{
 		MenuBuilder.AddMenuEntry(
-			FVRiticsMenuCommands::Get().Clap, NAME_None,
+			FVRiticsMenuCommands::Get().Introduction, NAME_None,
 			FText::FromString("Introduction"),
 			FText::FromString("Open the introduction window"),
 			FSlateIcon()
@@ -87,10 +102,10 @@ void FVRiticsModule::FillMenu(FMenuBuilder& MenuBuilder)
 	}
 	MenuBuilder.EndSection();
 
-	MenuBuilder.BeginSection("Clap2");
+	MenuBuilder.BeginSection("ConnectionTester");
 	{
 		MenuBuilder.AddMenuEntry(
-		FVRiticsMenuCommands::Get().Clap2, NAME_None,
+		FVRiticsMenuCommands::Get().ConnectionTest, NAME_None,
 			FText::FromString("Connection tester"),
 			FText::FromString("Open the connection tester window"),
 			FSlateIcon()
@@ -99,25 +114,118 @@ void FVRiticsModule::FillMenu(FMenuBuilder& MenuBuilder)
 	MenuBuilder.EndSection();
 }
 
-void FVRiticsModule::OnBtnClicked()
+void FVRiticsModule::OnIntroductionClicked()
 {
 	UE_LOG(LogSimplePlugin, Log, TEXT("FVRiticsModule::OnBtnClicked"));
 	TSharedRef<class FGlobalTabmanager> tm = FGlobalTabmanager::Get();
-	tm->TryInvokeTab(TabName);
+	tm->TryInvokeTab(IntroductionTabName);
 }
 
 
-TSharedRef<SDockTab> FVRiticsModule::SpawnTab(const FSpawnTabArgs& TabSpawnArgs)
+void FVRiticsModule::OnConnectionTestClicked()
+{
+	UE_LOG(LogSimplePlugin, Log, TEXT("FVRiticsModule::OnBtnClicked"));
+	TSharedRef<class FGlobalTabmanager> tm = FGlobalTabmanager::Get();
+	tm->TryInvokeTab(ConnectionTestTabName);
+}
+
+const void FVRiticsModule::UpdateConnectionResult() const
+{
+	// ConnectionResults = FText::FromString(TEXT("Clicked"));
+}
+
+TSharedRef<SDockTab> FVRiticsModule::SpawnIntroductionTab(const FSpawnTabArgs& TabSpawnArgs) const
+{
+	TSharedRef<SDockTab> SpawnedTab = SNew(SDockTab)
+	  .TabRole(NomadTab)
+	  [
+	  SNew(SVerticalBox)
+		+ SVerticalBox::Slot()[
+	      SNew(SRichTextBlock)
+	      .Text(FText::FromString(TEXT("To correctly send events to VRitics' backend you need to follow the steps:\n"
+	          "1. Call the Setup node with the correct Token and AppID.\n"
+	          "2.Call the StartSession node with the name of the object that sends it for the events to start registering.\n"
+	          "3.Use the RegisterEvent node to record a failed or successful interaction attempt.\n"
+	          "4. To send packed events to the backend you need to call the SendSession node.\n"
+	          "If executed properly, all the registered events and sessions should be visible in the dashboard panel of the app with the corresponding AppID.")))
+	          ]
+	          + SVerticalBox::Slot()[
+			SNew(SButton)
+				.Text(FText::FromString(TEXT("Open VRitics website")))
+				.OnClicked_Lambda([&]()
+				{
+					const FString URL = TEXT("http://vr-dashboard.server306419.nazwa.pl/");
+					FPlatformProcess::LaunchURL(*URL, nullptr, nullptr);
+					return FReply::Handled();
+				})
+			]
+	          
+	          ];
+
+	return SpawnedTab;
+}
+
+TSharedRef<SDockTab> FVRiticsModule::SpawnConnectionTestTab(const FSpawnTabArgs& TabSpawnArgs) const
 {
 	TSharedRef<SDockTab> SpawnedTab = SNew(SDockTab)
 		.TabRole(ETabRole::NomadTab)
 		[
-		SNew(SButton)
-			.Text(FText::FromString(TEXT("Clap")))
-			.ContentPadding(3)
+			SNew(SVerticalBox)
+			+ SVerticalBox::Slot()[
+			SNew(SHorizontalBox) +
+				SHorizontalBox::Slot()[
+					SNew(STextBlock).Text(FText::FromString(TEXT("AppID")))
+				].VAlign(VAlign_Center).HAlign(HAlign_Right)
+ +
+				SHorizontalBox::Slot()[
+					SNew(SEditableTextBox).Text(AppID)
+				].VAlign(VAlign_Center).HAlign(HAlign_Fill)
+			]
+			+ SVerticalBox::Slot()[
+			SNew(SHorizontalBox) +
+				SHorizontalBox::Slot()[
+					SNew(STextBlock).Text(FText::FromString(TEXT("Token")))
+				].VAlign(VAlign_Center).HAlign(HAlign_Right)
+ +
+				SHorizontalBox::Slot()[
+					SNew(SEditableTextBox).Text(Token)
+				].VAlign(VAlign_Center).HAlign(HAlign_Fill)
+			]
+			+ SVerticalBox::Slot()[
+			SNew(SButton)
+				.Text(FText::FromString(TEXT("TestConnection")))
+				.ContentPadding(3)
+				.OnClicked_Lambda([&]()
+				{
+					VRiticsSession::TestSessions(AppID, Token);
+					return FReply::Handled();
+				})
+			].VAlign(VAlign_Center).HAlign(HAlign_Center)
+
+			+ SVerticalBox::Slot()[
+			SNew(SScrollBox)
+				+ SScrollBox::Slot()
+				.VAlign(VAlign_Top)
+				.Padding(5)
+				[
+					SNew(SBorder)
+					.BorderBackgroundColor(FColor(192, 192, 192, 255))
+					.Padding(15.0f)
+					[
+						SNew(SEditableText).Text(Result)
+					]
+				]
+			]
 		];
 
 	return SpawnedTab;
+}
+
+void FVRiticsModule::RefreshResult(const FText& Text)
+{
+	Result = Text;
+	GEditor->RedrawAllViewports(true);
+	
 }
 
 IMPLEMENT_MODULE(FVRiticsModule, SimplePlugin)

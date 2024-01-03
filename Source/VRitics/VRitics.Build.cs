@@ -41,7 +41,8 @@ public class VRitics : ModuleRules
 				"SlateCore",
 				"HTTP",
 				"HeadMountedDisplay",
-				"EditorStyle"
+				"EditorStyle",
+				"UnrealEd"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
