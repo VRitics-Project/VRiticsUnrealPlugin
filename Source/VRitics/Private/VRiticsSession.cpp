@@ -103,7 +103,7 @@ void VRiticsSession::SendSession( const FString& PlayerId, const FString& AppId,
 					Response = TEXT("Request failed.");
 				}
 			}
-			FVRiticsModule::RefreshResult(FText::FromString(Response));
+			FVRiticsModule::RefreshResult(Response);
 		});
 
 	pRequest->ProcessRequest();

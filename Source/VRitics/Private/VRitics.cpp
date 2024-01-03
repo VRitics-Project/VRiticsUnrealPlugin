@@ -1,6 +1,5 @@
 #include "VRitics.h"
 
-#include "EditorStyleSet.h"
 #include "LevelEditor.h"
 #include "Widgets/Docking/SDockTab.h"
 #include "VRiticsMenuCommands.h"
@@ -34,10 +33,7 @@ void FVRiticsModule::StartupModule()
 		FExecuteAction::CreateRaw(this, &FVRiticsModule::OnConnectionTestClicked),
 		FCanExecuteAction());
 	
-	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
 	MyExtender = MakeShareable(new FExtender);
-	MyExtender->AddToolBarExtension("Settings", EExtensionHook::After, MyPluginCommands, FToolBarExtensionDelegate::CreateRaw(this, &FVRiticsModule::AddToolbarExtension));
-
 	MyExtender->AddMenuBarExtension(
 		"Help",
 		EExtensionHook::After,
@@ -46,7 +42,6 @@ void FVRiticsModule::StartupModule()
 	);
 
 	FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>("LevelEditor");
-	LevelEditorModule.GetToolBarExtensibilityManager()->AddExtender(MyExtender);
 	LevelEditorModule.GetMenuExtensibilityManager()->AddExtender(MyExtender);
 
 	const TSharedRef<FGlobalTabmanager> TabManager = FGlobalTabmanager::Get();
@@ -58,25 +53,14 @@ void FVRiticsModule::StartupModule()
 
 void FVRiticsModule::ShutdownModule()
 {
-	FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>("LevelEditor");
-	LevelEditorModule.GetToolBarExtensibilityManager()->RemoveExtender(MyExtender);
-	LevelEditorModule.GetMenuExtensibilityManager()->RemoveExtender(MyExtender);
-
 	FVRiticsMenuCommands::Unregister();
+
+	FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>("LevelEditor");
+	LevelEditorModule.GetMenuExtensibilityManager()->AddExtender(MyExtender);
 
 	TSharedRef<class FGlobalTabmanager> tm = FGlobalTabmanager::Get();
 	tm->UnregisterNomadTabSpawner(IntroductionTabName);
 	tm->UnregisterNomadTabSpawner(ConnectionTestTabName);
-
-}
-
-void FVRiticsModule::AddToolbarExtension(class FToolBarBuilder& Builder)
-{
-#define LOCTEXT_NAMESPACE "LevelEditorToolBar"
-	FSlateIcon IconBrush = FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.ViewOptions", "LevelEditor.ViewOptions.Small");
-	Builder.AddToolBarButton(FVRiticsMenuCommands::Get().Introduction, NAME_None, LOCTEXT("MyButton_Override", "Clap"), LOCTEXT("MyButton_ToolTipOverride", "Click to clap"), IconBrush, NAME_None);
-#undef LOCTEXT_NAMESPACE
-
 }
 
 void FVRiticsModule::AddPullDownMenu(FMenuBarBuilder& MenuBuilder)
@@ -129,18 +113,15 @@ void FVRiticsModule::OnConnectionTestClicked()
 	tm->TryInvokeTab(ConnectionTestTabName);
 }
 
-const void FVRiticsModule::UpdateConnectionResult() const
-{
-	// ConnectionResults = FText::FromString(TEXT("Clicked"));
-}
-
 TSharedRef<SDockTab> FVRiticsModule::SpawnIntroductionTab(const FSpawnTabArgs& TabSpawnArgs) const
 {
 	TSharedRef<SDockTab> SpawnedTab = SNew(SDockTab)
 	  .TabRole(NomadTab)
 	  [
 	  SNew(SVerticalBox)
-		+ SVerticalBox::Slot()[
+		+ SVerticalBox::Slot()
+		.Padding(20)
+		[
 	      SNew(SRichTextBlock)
 	      .Text(FText::FromString(TEXT("To correctly send events to VRitics' backend you need to follow the steps:\n"
 	          "1. Call the Setup node with the correct Token and AppID.\n"
@@ -212,20 +193,17 @@ TSharedRef<SDockTab> FVRiticsModule::SpawnConnectionTestTab(const FSpawnTabArgs&
 					.BorderBackgroundColor(FColor(192, 192, 192, 255))
 					.Padding(15.0f)
 					[
-						SNew(SEditableText).Text(Result)
+						SNew(STextBlock).Text(Result)
 					]
 				]
 			]
 		];
-
 	return SpawnedTab;
 }
 
-void FVRiticsModule::RefreshResult(const FText& Text)
+void FVRiticsModule::RefreshResult(FString Text)
 {
-	Result = Text;
-	GEditor->RedrawAllViewports(true);
-	
+	Result = FText::FromString(Text);
 }
 
 IMPLEMENT_MODULE(FVRiticsModule, SimplePlugin)
