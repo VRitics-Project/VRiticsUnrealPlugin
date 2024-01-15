@@ -46,9 +46,9 @@ void FVRiticsModule::StartupModule()
 
 	const TSharedRef<FGlobalTabmanager> TabManager = FGlobalTabmanager::Get();
 	TabManager->RegisterNomadTabSpawner(IntroductionTabName, FOnSpawnTab::CreateRaw(this, &FVRiticsModule::SpawnIntroductionTab))
-		.SetDisplayName(FText::FromString(TEXT("Introduction")));
+		.SetDisplayName(FText::FromString(TEXT("Introduction"))).SetMenuType(ETabSpawnerMenuType::Hidden);
 	TabManager->RegisterNomadTabSpawner(ConnectionTestTabName, FOnSpawnTab::CreateRaw(this, &FVRiticsModule::SpawnConnectionTestTab))
-	.SetDisplayName(FText::FromString(TEXT("Connection Test")));
+	.SetDisplayName(FText::FromString(TEXT("Connection Test"))).SetMenuType(ETabSpawnerMenuType::Hidden);
 }
 
 void FVRiticsModule::ShutdownModule()

@@ -4,8 +4,15 @@
 		"Module.VRitics.cpp.obj": [
 			"VRitics.init.gen.cpp.obj",
 			"VRiticsBPLibrary.gen.cpp.obj",
+			"VRiticsHand.gen.cpp.obj",
+			"VRiticsSetup.gen.cpp.obj",
 			"VRitics.cpp.obj",
-			"VRiticsBPLibrary.cpp.obj"
+			"VRiticsBPLibrary.cpp.obj",
+			"VRiticsEvent.cpp.obj",
+			"VRiticsHand.cpp.obj",
+			"VRiticsMenuCommands.cpp.obj",
+			"VRiticsSession.cpp.obj",
+			"VRiticsSetup.cpp.obj"
 		]
 	}
 }
