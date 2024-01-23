@@ -11,9 +11,9 @@ public:
 	VRiticsSession(FString);
 	static void AddSession(FString);
 	static void RegisterEvent(FString, FVector3f, bool);
-	static void SendSession(const FString&, const FString&, const FString&, VRiticsSession&);
+	static void SendSession(const FString&, const FString&, const FString&, VRiticsSession&, void (FString) = nullptr);
 	static void SendSessions();
-	static void TestSessions(const FText&, const FText&);
+	static void TestSessions(const FString&, const FString&, void (FString) = nullptr); 
 
 	static TArray<VRiticsSession> CurrentSessions;
 	

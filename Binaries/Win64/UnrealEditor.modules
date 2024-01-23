@@ -1,7 +1,8 @@
 {
-	"BuildId": "25360045",
+	"BuildId": "27405482",
 	"Modules": 
 	{
-		"VRitics": "UnrealEditor-VRitics.dll"
+		"VRitics": "UnrealEditor-VRitics.dll",
+		"VRiticsEditor": "UnrealEditor-VRiticsEditor.dll"
 	}
 }

@@ -2,10 +2,8 @@
 
 #include "Modules/ModuleManager.h"
 
-class FVRiticsModule : public IModuleInterface
+class FVRiticsEditorModule : public IModuleInterface
 {
-	static FText Token; 
-	static FText AppID;
 public:
 	static FText Result;
 

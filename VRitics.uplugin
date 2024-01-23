@@ -16,9 +16,14 @@
 	"Installed": false,
 	"Modules": [
 		{
-			"Name": "VRitics",
+			"Name": "VRiticsEditor",
 			"Type": "Editor",
-			"LoadingPhase": "PreLoadingScreen"
+			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "VRitics",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
 		}
 	]
 }

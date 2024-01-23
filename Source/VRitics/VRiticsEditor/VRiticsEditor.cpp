@@ -1,23 +1,28 @@
-#include "VRitics.h"
+#include "VRiticsEditor.h"
 
 #include "LevelEditor.h"
 #include "Widgets/Docking/SDockTab.h"
-#include "VRiticsMenuCommands.h"
-#include "VRiticsSession.h"
 #include "Widgets/Input/SEditableTextBox.h"
 #include "Widgets/Layout/SScrollBox.h"
 #include "Widgets/Text/SRichTextBlock.h"
+
+#include "VRiticsMenuCommands.h"
+#include "VRitics/VRiticsRuntime/VRitics.h"
+#include "VRitics/VRiticsRuntime/VRiticsSession.h"
+
+IMPLEMENT_MODULE(FVRiticsEditorModule, VRiticsEditor)
 
 DEFINE_LOG_CATEGORY_STATIC(LogSimplePlugin, Log, All);
 
 static const FName IntroductionTabName("Introduction Tab");
 static const FName ConnectionTestTabName("Connection Test Tab");
 
-FText FVRiticsModule::AppID;
-FText FVRiticsModule::Token;
-FText FVRiticsModule::Result;
+FString FVRiticsModule::AppID;
+FString FVRiticsModule::Token;
 
-void FVRiticsModule::StartupModule()
+FText FVRiticsEditorModule::Result;
+
+void FVRiticsEditorModule::StartupModule()
 {
 	FVRiticsMenuCommands::Register();
 
@@ -25,12 +30,12 @@ void FVRiticsModule::StartupModule()
 
 	MyPluginCommands->MapAction(
 		FVRiticsMenuCommands::Get().Introduction,
-		FExecuteAction::CreateRaw(this, &FVRiticsModule::OnIntroductionClicked),
+		FExecuteAction::CreateRaw(this, &FVRiticsEditorModule::OnIntroductionClicked),
 		FCanExecuteAction());
 
 	MyPluginCommands->MapAction(
 		FVRiticsMenuCommands::Get().ConnectionTest,
-		FExecuteAction::CreateRaw(this, &FVRiticsModule::OnConnectionTestClicked),
+		FExecuteAction::CreateRaw(this, &FVRiticsEditorModule::OnConnectionTestClicked),
 		FCanExecuteAction());
 	
 	MyExtender = MakeShareable(new FExtender);
@@ -38,20 +43,20 @@ void FVRiticsModule::StartupModule()
 		"Help",
 		EExtensionHook::After,
 		MyPluginCommands,
-		FMenuBarExtensionDelegate::CreateRaw(this, &FVRiticsModule::AddPullDownMenu)
+		FMenuBarExtensionDelegate::CreateRaw(this, &FVRiticsEditorModule::AddPullDownMenu)
 	);
 
 	FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>("LevelEditor");
 	LevelEditorModule.GetMenuExtensibilityManager()->AddExtender(MyExtender);
 
 	const TSharedRef<FGlobalTabmanager> TabManager = FGlobalTabmanager::Get();
-	TabManager->RegisterNomadTabSpawner(IntroductionTabName, FOnSpawnTab::CreateRaw(this, &FVRiticsModule::SpawnIntroductionTab))
+	TabManager->RegisterNomadTabSpawner(IntroductionTabName, FOnSpawnTab::CreateRaw(this, &FVRiticsEditorModule::SpawnIntroductionTab))
 		.SetDisplayName(FText::FromString(TEXT("Introduction"))).SetMenuType(ETabSpawnerMenuType::Hidden);
-	TabManager->RegisterNomadTabSpawner(ConnectionTestTabName, FOnSpawnTab::CreateRaw(this, &FVRiticsModule::SpawnConnectionTestTab))
+	TabManager->RegisterNomadTabSpawner(ConnectionTestTabName, FOnSpawnTab::CreateRaw(this, &FVRiticsEditorModule::SpawnConnectionTestTab))
 	.SetDisplayName(FText::FromString(TEXT("Connection Test"))).SetMenuType(ETabSpawnerMenuType::Hidden);
 }
 
-void FVRiticsModule::ShutdownModule()
+void FVRiticsEditorModule::ShutdownModule()
 {
 	FVRiticsMenuCommands::Unregister();
 
@@ -63,17 +68,17 @@ void FVRiticsModule::ShutdownModule()
 	tm->UnregisterNomadTabSpawner(ConnectionTestTabName);
 }
 
-void FVRiticsModule::AddPullDownMenu(FMenuBarBuilder& MenuBuilder)
+void FVRiticsEditorModule::AddPullDownMenu(FMenuBarBuilder& MenuBuilder)
 {
 	MenuBuilder.AddPullDownMenu(
 		FText::FromString("VRitics"),
 		FText::FromString("VRitics plugin tools"),
-		FNewMenuDelegate::CreateRaw(this, &FVRiticsModule::FillMenu),
+		FNewMenuDelegate::CreateRaw(this, &FVRiticsEditorModule::FillMenu),
 		"Custom"
 	);
 }
 
-void FVRiticsModule::FillMenu(FMenuBuilder& MenuBuilder)
+void FVRiticsEditorModule::FillMenu(FMenuBuilder& MenuBuilder)
 {
 	MenuBuilder.BeginSection("Introduction");
 	{
@@ -98,7 +103,7 @@ void FVRiticsModule::FillMenu(FMenuBuilder& MenuBuilder)
 	MenuBuilder.EndSection();
 }
 
-void FVRiticsModule::OnIntroductionClicked()
+void FVRiticsEditorModule::OnIntroductionClicked()
 {
 	UE_LOG(LogSimplePlugin, Log, TEXT("FVRiticsModule::OnBtnClicked"));
 	TSharedRef<class FGlobalTabmanager> tm = FGlobalTabmanager::Get();
@@ -106,14 +111,14 @@ void FVRiticsModule::OnIntroductionClicked()
 }
 
 
-void FVRiticsModule::OnConnectionTestClicked()
+void FVRiticsEditorModule::OnConnectionTestClicked()
 {
 	UE_LOG(LogSimplePlugin, Log, TEXT("FVRiticsModule::OnBtnClicked"));
 	TSharedRef<class FGlobalTabmanager> tm = FGlobalTabmanager::Get();
 	tm->TryInvokeTab(ConnectionTestTabName);
 }
 
-TSharedRef<SDockTab> FVRiticsModule::SpawnIntroductionTab(const FSpawnTabArgs& TabSpawnArgs) const
+TSharedRef<SDockTab> FVRiticsEditorModule::SpawnIntroductionTab(const FSpawnTabArgs& TabSpawnArgs) const
 {
 	TSharedRef<SDockTab> SpawnedTab = SNew(SDockTab)
 	  .TabRole(NomadTab)
@@ -146,7 +151,7 @@ TSharedRef<SDockTab> FVRiticsModule::SpawnIntroductionTab(const FSpawnTabArgs& T
 	return SpawnedTab;
 }
 
-TSharedRef<SDockTab> FVRiticsModule::SpawnConnectionTestTab(const FSpawnTabArgs& TabSpawnArgs) const
+TSharedRef<SDockTab> FVRiticsEditorModule::SpawnConnectionTestTab(const FSpawnTabArgs& TabSpawnArgs) const
 {
 	TSharedRef<SDockTab> SpawnedTab = SNew(SDockTab)
 		.TabRole(ETabRole::NomadTab)
@@ -159,7 +164,7 @@ TSharedRef<SDockTab> FVRiticsModule::SpawnConnectionTestTab(const FSpawnTabArgs&
 				].VAlign(VAlign_Center).HAlign(HAlign_Right)
  +
 				SHorizontalBox::Slot()[
-					SNew(SEditableTextBox).Text(AppID)
+					SNew(SEditableTextBox).Text(FText::FromString(FVRiticsModule::AppID))
 				].VAlign(VAlign_Center).HAlign(HAlign_Fill)
 			]
 			+ SVerticalBox::Slot()[
@@ -169,7 +174,7 @@ TSharedRef<SDockTab> FVRiticsModule::SpawnConnectionTestTab(const FSpawnTabArgs&
 				].VAlign(VAlign_Center).HAlign(HAlign_Right)
  +
 				SHorizontalBox::Slot()[
-					SNew(SEditableTextBox).Text(Token)
+					SNew(SEditableTextBox).Text(FText::FromString(FVRiticsModule::Token))
 				].VAlign(VAlign_Center).HAlign(HAlign_Fill)
 			]
 			+ SVerticalBox::Slot()[
@@ -178,7 +183,7 @@ TSharedRef<SDockTab> FVRiticsModule::SpawnConnectionTestTab(const FSpawnTabArgs&
 				.ContentPadding(3)
 				.OnClicked_Lambda([&]()
 				{
-					VRiticsSession::TestSessions(AppID, Token);
+					VRiticsSession::TestSessions(FVRiticsModule::AppID, FVRiticsModule::Token, FVRiticsEditorModule::RefreshResult);
 					return FReply::Handled();
 				})
 			].VAlign(VAlign_Center).HAlign(HAlign_Center)
@@ -201,9 +206,7 @@ TSharedRef<SDockTab> FVRiticsModule::SpawnConnectionTestTab(const FSpawnTabArgs&
 	return SpawnedTab;
 }
 
-void FVRiticsModule::RefreshResult(FString Text)
+void FVRiticsEditorModule::RefreshResult(FString Text)
 {
 	Result = FText::FromString(Text);
 }
-
-IMPLEMENT_MODULE(FVRiticsModule, SimplePlugin)

@@ -4,9 +4,6 @@
 
 #include "CoreMinimal.h"
 
-/**
- * 
- */
 class VRITICS_API VRiticsEvent
 {
 public:

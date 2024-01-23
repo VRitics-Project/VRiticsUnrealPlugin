@@ -2,9 +2,8 @@
 
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "HttpModule.h"
-#include "VRitics.h"
-#include "VRiticsSetup.h"
 #include "Interfaces/IHttpResponse.h"
+#include "VRitics.h"
 
 TArray<VRiticsSession> VRiticsSession::CurrentSessions;
 class FHttpModule;
@@ -36,7 +35,7 @@ void VRiticsSession::RegisterEvent(FString name, FVector3f position , bool isSuc
 	}
 }
 
-void VRiticsSession::SendSession( const FString& PlayerId, const FString& AppId, const FString& Token, VRiticsSession& Session)
+void VRiticsSession::SendSession(const FString& PlayerId, const FString& AppId, const FString& Token, VRiticsSession& Session, void func(FString response))
 {
 	FString RequestContent = "{";
 	RequestContent.Append ("\"player_id\": \"");
@@ -103,7 +102,7 @@ void VRiticsSession::SendSession( const FString& PlayerId, const FString& AppId,
 					Response = TEXT("Request failed.");
 				}
 			}
-			FVRiticsModule::RefreshResult(Response);
+			func(Response);
 		});
 
 	pRequest->ProcessRequest();
@@ -113,15 +112,15 @@ void VRiticsSession::SendSessions()
 {
 	for (int i = CurrentSessions.Num()-1; i >= 0; i--)
 	{
-		CurrentSessions[i].SendSession(UVRiticsSetup::PlayerID, UVRiticsSetup::AppID, UVRiticsSetup::Token, CurrentSessions[i]);
+		CurrentSessions[i].SendSession(FVRiticsModule::PlayerID, FVRiticsModule::AppID, FVRiticsModule::Token, CurrentSessions[i]);
 		CurrentSessions.RemoveAt(i);
 	}
 }
 
-void VRiticsSession::TestSessions(const FText& AppId, const FText& Token)
+void VRiticsSession::TestSessions(const FString& AppId, const FString& Token, void func(FString response))
 {
 	VRiticsSession* TestSession = new VRiticsSession("TestSession");
 	TestSession->Events.Add(VRiticsEvent("TestEvent", FVector3f::Zero(), true));
-	TestSession->SendSession("Test", AppId.ToString(), Token.ToString(), *TestSession);
+	TestSession->SendSession("Test", AppId, Token, *TestSession, func);
 	delete TestSession;
 }

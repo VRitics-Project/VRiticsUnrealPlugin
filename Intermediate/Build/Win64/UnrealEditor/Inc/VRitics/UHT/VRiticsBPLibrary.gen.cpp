@@ -5,7 +5,7 @@
 ===========================================================================*/
 
 #include "UObject/GeneratedCppIncludes.h"
-#include "VRitics/Public/VRiticsBPLibrary.h"
+#include "VRitics/VRiticsRuntime/VRiticsBPLibrary.h"
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeVRiticsBPLibrary() {}
 // Cross Module References
@@ -79,13 +79,13 @@ void EmptyLinkFunctionForGeneratedCodeVRiticsBPLibrary() {}
 #endif
 		static const UECodeGen_Private::FFunctionParams FuncParams;
 	};
-	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::NewProp_Position = { "Position", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(VRiticsBPLibrary_eventRegisterEvent_Parms, Position), Z_Construct_UScriptStruct_FVector3f, METADATA_PARAMS(nullptr, 0) };
-	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::NewProp_Name = { "Name", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(VRiticsBPLibrary_eventRegisterEvent_Parms, Name), METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::NewProp_Position = { "Position", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(VRiticsBPLibrary_eventRegisterEvent_Parms, Position), Z_Construct_UScriptStruct_FVector3f, METADATA_PARAMS(0, nullptr) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::NewProp_Name = { "Name", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(VRiticsBPLibrary_eventRegisterEvent_Parms, Name), METADATA_PARAMS(0, nullptr) };
 	void Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::NewProp_bIsSuccessful_SetBit(void* Obj)
 	{
 		((VRiticsBPLibrary_eventRegisterEvent_Parms*)Obj)->bIsSuccessful = 1;
 	}
-	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::NewProp_bIsSuccessful = { "bIsSuccessful", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, sizeof(bool), sizeof(VRiticsBPLibrary_eventRegisterEvent_Parms), &Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::NewProp_bIsSuccessful_SetBit, METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::NewProp_bIsSuccessful = { "bIsSuccessful", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(VRiticsBPLibrary_eventRegisterEvent_Parms), &Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::NewProp_bIsSuccessful_SetBit, METADATA_PARAMS(0, nullptr) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::NewProp_Position,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::NewProp_Name,
@@ -96,10 +96,12 @@ void EmptyLinkFunctionForGeneratedCodeVRiticsBPLibrary() {}
 		{ "Category", "VRitics" },
 		{ "DisplayName", "RegisterEvent" },
 		{ "Keywords", "VRitics register event" },
-		{ "ModuleRelativePath", "Public/VRiticsBPLibrary.h" },
+		{ "ModuleRelativePath", "VRiticsBPLibrary.h" },
 	};
 #endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UVRiticsBPLibrary, nullptr, "RegisterEvent", nullptr, nullptr, sizeof(Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::VRiticsBPLibrary_eventRegisterEvent_Parms), Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04822401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::Function_MetaDataParams)) };
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UVRiticsBPLibrary, nullptr, "RegisterEvent", nullptr, nullptr, Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::PropPointers), sizeof(Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::VRiticsBPLibrary_eventRegisterEvent_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04822401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::Function_MetaDataParams), Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::Function_MetaDataParams) };
+	static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::PropPointers) < 2048);
+	static_assert(sizeof(Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent_Statics::VRiticsBPLibrary_eventRegisterEvent_Parms) < MAX_uint16);
 	UFunction* Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent()
 	{
 		static UFunction* ReturnFunction = nullptr;
@@ -121,10 +123,10 @@ void EmptyLinkFunctionForGeneratedCodeVRiticsBPLibrary() {}
 		{ "Category", "VRitics" },
 		{ "DisplayName", "SendSession" },
 		{ "Keywords", "VRitics send session" },
-		{ "ModuleRelativePath", "Public/VRiticsBPLibrary.h" },
+		{ "ModuleRelativePath", "VRiticsBPLibrary.h" },
 	};
 #endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UVRiticsBPLibrary_SendSession_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UVRiticsBPLibrary, nullptr, "SendSession", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UVRiticsBPLibrary_SendSession_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_SendSession_Statics::Function_MetaDataParams)) };
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UVRiticsBPLibrary_SendSession_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UVRiticsBPLibrary, nullptr, "SendSession", nullptr, nullptr, nullptr, 0, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_SendSession_Statics::Function_MetaDataParams), Z_Construct_UFunction_UVRiticsBPLibrary_SendSession_Statics::Function_MetaDataParams) };
 	UFunction* Z_Construct_UFunction_UVRiticsBPLibrary_SendSession()
 	{
 		static UFunction* ReturnFunction = nullptr;
@@ -151,9 +153,9 @@ void EmptyLinkFunctionForGeneratedCodeVRiticsBPLibrary() {}
 #endif
 		static const UECodeGen_Private::FFunctionParams FuncParams;
 	};
-	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::NewProp_PlayerID = { "PlayerID", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(VRiticsBPLibrary_eventSetup_Parms, PlayerID), METADATA_PARAMS(nullptr, 0) };
-	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::NewProp_AppID = { "AppID", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(VRiticsBPLibrary_eventSetup_Parms, AppID), METADATA_PARAMS(nullptr, 0) };
-	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::NewProp_Token = { "Token", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(VRiticsBPLibrary_eventSetup_Parms, Token), METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::NewProp_PlayerID = { "PlayerID", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(VRiticsBPLibrary_eventSetup_Parms, PlayerID), METADATA_PARAMS(0, nullptr) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::NewProp_AppID = { "AppID", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(VRiticsBPLibrary_eventSetup_Parms, AppID), METADATA_PARAMS(0, nullptr) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::NewProp_Token = { "Token", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(VRiticsBPLibrary_eventSetup_Parms, Token), METADATA_PARAMS(0, nullptr) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::NewProp_PlayerID,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::NewProp_AppID,
@@ -164,10 +166,12 @@ void EmptyLinkFunctionForGeneratedCodeVRiticsBPLibrary() {}
 		{ "Category", "VRitics" },
 		{ "DisplayName", "Setup" },
 		{ "Keywords", "VRitics setup" },
-		{ "ModuleRelativePath", "Public/VRiticsBPLibrary.h" },
+		{ "ModuleRelativePath", "VRiticsBPLibrary.h" },
 	};
 #endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UVRiticsBPLibrary, nullptr, "Setup", nullptr, nullptr, sizeof(Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::VRiticsBPLibrary_eventSetup_Parms), Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::Function_MetaDataParams)) };
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UVRiticsBPLibrary, nullptr, "Setup", nullptr, nullptr, Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::PropPointers), sizeof(Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::VRiticsBPLibrary_eventSetup_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::Function_MetaDataParams), Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::Function_MetaDataParams) };
+	static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::PropPointers) < 2048);
+	static_assert(sizeof(Z_Construct_UFunction_UVRiticsBPLibrary_Setup_Statics::VRiticsBPLibrary_eventSetup_Parms) < MAX_uint16);
 	UFunction* Z_Construct_UFunction_UVRiticsBPLibrary_Setup()
 	{
 		static UFunction* ReturnFunction = nullptr;
@@ -190,7 +194,7 @@ void EmptyLinkFunctionForGeneratedCodeVRiticsBPLibrary() {}
 #endif
 		static const UECodeGen_Private::FFunctionParams FuncParams;
 	};
-	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::NewProp_Name = { "Name", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, 1, nullptr, nullptr, STRUCT_OFFSET(VRiticsBPLibrary_eventStartSession_Parms, Name), METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::NewProp_Name = { "Name", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(VRiticsBPLibrary_eventStartSession_Parms, Name), METADATA_PARAMS(0, nullptr) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::NewProp_Name,
 	};
@@ -199,10 +203,12 @@ void EmptyLinkFunctionForGeneratedCodeVRiticsBPLibrary() {}
 		{ "Category", "VRitics" },
 		{ "DisplayName", "StartSession" },
 		{ "Keywords", "VRitics start session" },
-		{ "ModuleRelativePath", "Public/VRiticsBPLibrary.h" },
+		{ "ModuleRelativePath", "VRiticsBPLibrary.h" },
 	};
 #endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UVRiticsBPLibrary, nullptr, "StartSession", nullptr, nullptr, sizeof(Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::VRiticsBPLibrary_eventStartSession_Parms), Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::Function_MetaDataParams)) };
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UVRiticsBPLibrary, nullptr, "StartSession", nullptr, nullptr, Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::PropPointers), sizeof(Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::VRiticsBPLibrary_eventStartSession_Parms), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04022401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::Function_MetaDataParams), Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::Function_MetaDataParams) };
+	static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::PropPointers) < 2048);
+	static_assert(sizeof(Z_Construct_UFunction_UVRiticsBPLibrary_StartSession_Statics::VRiticsBPLibrary_eventStartSession_Parms) < MAX_uint16);
 	UFunction* Z_Construct_UFunction_UVRiticsBPLibrary_StartSession()
 	{
 		static UFunction* ReturnFunction = nullptr;
@@ -231,16 +237,18 @@ void EmptyLinkFunctionForGeneratedCodeVRiticsBPLibrary() {}
 		(UObject* (*)())Z_Construct_UClass_UBlueprintFunctionLibrary,
 		(UObject* (*)())Z_Construct_UPackage__Script_VRitics,
 	};
+	static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UVRiticsBPLibrary_Statics::DependentSingletons) < 16);
 	const FClassFunctionLinkInfo Z_Construct_UClass_UVRiticsBPLibrary_Statics::FuncInfo[] = {
-		{ &Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent, "RegisterEvent" }, // 1680634461
-		{ &Z_Construct_UFunction_UVRiticsBPLibrary_SendSession, "SendSession" }, // 2767794583
-		{ &Z_Construct_UFunction_UVRiticsBPLibrary_Setup, "Setup" }, // 169899660
-		{ &Z_Construct_UFunction_UVRiticsBPLibrary_StartSession, "StartSession" }, // 2826331936
+		{ &Z_Construct_UFunction_UVRiticsBPLibrary_RegisterEvent, "RegisterEvent" }, // 3628264834
+		{ &Z_Construct_UFunction_UVRiticsBPLibrary_SendSession, "SendSession" }, // 3858191318
+		{ &Z_Construct_UFunction_UVRiticsBPLibrary_Setup, "Setup" }, // 4129395316
+		{ &Z_Construct_UFunction_UVRiticsBPLibrary_StartSession, "StartSession" }, // 1293541658
 	};
+	static_assert(UE_ARRAY_COUNT(Z_Construct_UClass_UVRiticsBPLibrary_Statics::FuncInfo) < 2048);
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UVRiticsBPLibrary_Statics::Class_MetaDataParams[] = {
 		{ "IncludePath", "VRiticsBPLibrary.h" },
-		{ "ModuleRelativePath", "Public/VRiticsBPLibrary.h" },
+		{ "ModuleRelativePath", "VRiticsBPLibrary.h" },
 	};
 #endif
 	const FCppClassTypeInfoStatic Z_Construct_UClass_UVRiticsBPLibrary_Statics::StaticCppClassTypeInfo = {
@@ -259,7 +267,7 @@ void EmptyLinkFunctionForGeneratedCodeVRiticsBPLibrary() {}
 		0,
 		0,
 		0x000000A0u,
-		METADATA_PARAMS(Z_Construct_UClass_UVRiticsBPLibrary_Statics::Class_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UClass_UVRiticsBPLibrary_Statics::Class_MetaDataParams))
+		METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UClass_UVRiticsBPLibrary_Statics::Class_MetaDataParams), Z_Construct_UClass_UVRiticsBPLibrary_Statics::Class_MetaDataParams)
 	};
 	UClass* Z_Construct_UClass_UVRiticsBPLibrary()
 	{
@@ -275,15 +283,15 @@ void EmptyLinkFunctionForGeneratedCodeVRiticsBPLibrary() {}
 	}
 	DEFINE_VTABLE_PTR_HELPER_CTOR(UVRiticsBPLibrary);
 	UVRiticsBPLibrary::~UVRiticsBPLibrary() {}
-	struct Z_CompiledInDeferFile_FID_Users_topto_OneDrive_Dokumenty_Unreal_Projects_VRiticsTest_Plugins_VRitics_Source_VRitics_Public_VRiticsBPLibrary_h_Statics
+	struct Z_CompiledInDeferFile_FID_Users_topto_OneDrive_Dokumenty_Unreal_Projects_VRiticsTest_Plugins_VRitics_Source_VRitics_VRiticsRuntime_VRiticsBPLibrary_h_Statics
 	{
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
-	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_topto_OneDrive_Dokumenty_Unreal_Projects_VRiticsTest_Plugins_VRitics_Source_VRitics_Public_VRiticsBPLibrary_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_UVRiticsBPLibrary, UVRiticsBPLibrary::StaticClass, TEXT("UVRiticsBPLibrary"), &Z_Registration_Info_UClass_UVRiticsBPLibrary, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UVRiticsBPLibrary), 252930381U) },
+	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_topto_OneDrive_Dokumenty_Unreal_Projects_VRiticsTest_Plugins_VRitics_Source_VRitics_VRiticsRuntime_VRiticsBPLibrary_h_Statics::ClassInfo[] = {
+		{ Z_Construct_UClass_UVRiticsBPLibrary, UVRiticsBPLibrary::StaticClass, TEXT("UVRiticsBPLibrary"), &Z_Registration_Info_UClass_UVRiticsBPLibrary, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UVRiticsBPLibrary), 1507683173U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_topto_OneDrive_Dokumenty_Unreal_Projects_VRiticsTest_Plugins_VRitics_Source_VRitics_Public_VRiticsBPLibrary_h_4037793267(TEXT("/Script/VRitics"),
-		Z_CompiledInDeferFile_FID_Users_topto_OneDrive_Dokumenty_Unreal_Projects_VRiticsTest_Plugins_VRitics_Source_VRitics_Public_VRiticsBPLibrary_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_topto_OneDrive_Dokumenty_Unreal_Projects_VRiticsTest_Plugins_VRitics_Source_VRitics_Public_VRiticsBPLibrary_h_Statics::ClassInfo),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Users_topto_OneDrive_Dokumenty_Unreal_Projects_VRiticsTest_Plugins_VRitics_Source_VRitics_VRiticsRuntime_VRiticsBPLibrary_h_662915489(TEXT("/Script/VRitics"),
+		Z_CompiledInDeferFile_FID_Users_topto_OneDrive_Dokumenty_Unreal_Projects_VRiticsTest_Plugins_VRitics_Source_VRitics_VRiticsRuntime_VRiticsBPLibrary_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Users_topto_OneDrive_Dokumenty_Unreal_Projects_VRiticsTest_Plugins_VRitics_Source_VRitics_VRiticsRuntime_VRiticsBPLibrary_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

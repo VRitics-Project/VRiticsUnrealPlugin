@@ -10,7 +10,6 @@
 			"VRiticsBPLibrary.cpp.obj",
 			"VRiticsEvent.cpp.obj",
 			"VRiticsHand.cpp.obj",
-			"VRiticsMenuCommands.cpp.obj",
 			"VRiticsSession.cpp.obj",
 			"VRiticsSetup.cpp.obj"
 		]
