@@ -158,6 +158,16 @@ TSharedRef<SDockTab> FVRiticsEditorModule::SpawnIntroductionTab(const FSpawnTabA
 					"5. Call SendSession node to end current session end send events to the server.\n\n"
 					"If executed properly, all the registered events and sessions should be visible in the dashboard panel of the app with the corresponding AppID.")))
 			].FillHeight(0.8f)
+			+ SVerticalBox::Slot()[
+				SNew(SButton)
+				.Text(FText::FromString(TEXT("See full manual")))
+				.OnClicked_Lambda([&]()
+							 {
+								 const FString URL = TEXT("https://drive.google.com/file/d/1PI4wqcVZvRQcjYI_UD_cC-PbED4EcBQl/view?usp=drive_link");
+								 FPlatformProcess::LaunchURL(*URL, nullptr, nullptr);
+								 return FReply::Handled();
+							 })
+			].VAlign(VAlign_Center).HAlign(HAlign_Center).FillHeight(0.1f)
 		];
 
 	return SpawnedTab;

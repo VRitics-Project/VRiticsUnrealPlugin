@@ -1,6 +1,7 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
+	"EngineVersion": "5.3",
 	"VersionName": "1.0",
 	"FriendlyName": "VRitics",
 	"Description": "VRitics plugin",
@@ -18,12 +19,14 @@
 		{
 			"Name": "VRiticsEditor",
 			"Type": "Editor",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"WhitelistPlatforms": [ "Win64", "Win32" ]
 		},
 		{
 			"Name": "VRitics",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"WhitelistPlatforms": [ "Win64", "Win32" ]
 		}
 	]
 }
