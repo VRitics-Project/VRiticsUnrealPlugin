@@ -15,16 +15,16 @@ public class VRiticsEditor : ModuleRules
 				"CoreUObject",
 				"Engine",
 				"UnrealEd",
-				"VRitics"
+				"VRitics",
+				"Slate"
 			}
 			);
-			
 		
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
 				"Slate",
-				"SlateCore",
+				"SlateCore"
 			}
 			);
 	}

@@ -23,6 +23,7 @@ FString FVRiticsModule::AppID;
 FString FVRiticsModule::Token;
 
 FText FVRiticsEditorModule::Result;
+TSharedPtr<STextBlock> FVRiticsEditorModule::TextBlock;
 
 void FVRiticsEditorModule::StartupModule()
 {
@@ -39,7 +40,7 @@ void FVRiticsEditorModule::StartupModule()
 		FVRiticsMenuCommands::Get().ConnectionTest,
 		FExecuteAction::CreateRaw(this, &FVRiticsEditorModule::OnConnectionTestClicked),
 		FCanExecuteAction());
-	
+
 	MyExtender = MakeShareable(new FExtender);
 	MyExtender->AddMenuBarExtension(
 		"Help",
@@ -52,10 +53,12 @@ void FVRiticsEditorModule::StartupModule()
 	LevelEditorModule.GetMenuExtensibilityManager()->AddExtender(MyExtender);
 
 	const TSharedRef<FGlobalTabmanager> TabManager = FGlobalTabmanager::Get();
-	TabManager->RegisterNomadTabSpawner(IntroductionTabName, FOnSpawnTab::CreateRaw(this, &FVRiticsEditorModule::SpawnIntroductionTab))
-		.SetDisplayName(FText::FromString(TEXT("Introduction"))).SetMenuType(ETabSpawnerMenuType::Hidden);
-	TabManager->RegisterNomadTabSpawner(ConnectionTestTabName, FOnSpawnTab::CreateRaw(this, &FVRiticsEditorModule::SpawnConnectionTestTab))
-	.SetDisplayName(FText::FromString(TEXT("Connection Test"))).SetMenuType(ETabSpawnerMenuType::Hidden);
+	TabManager->RegisterNomadTabSpawner(IntroductionTabName,
+	                                    FOnSpawnTab::CreateRaw(this, &FVRiticsEditorModule::SpawnIntroductionTab))
+	          .SetDisplayName(FText::FromString(TEXT("Introduction"))).SetMenuType(ETabSpawnerMenuType::Hidden);
+	TabManager->RegisterNomadTabSpawner(ConnectionTestTabName,
+	                                    FOnSpawnTab::CreateRaw(this, &FVRiticsEditorModule::SpawnConnectionTestTab))
+	          .SetDisplayName(FText::FromString(TEXT("Connection Test"))).SetMenuType(ETabSpawnerMenuType::Hidden);
 }
 
 void FVRiticsEditorModule::ShutdownModule()
@@ -96,11 +99,11 @@ void FVRiticsEditorModule::FillMenu(FMenuBuilder& MenuBuilder)
 	MenuBuilder.BeginSection("ConnectionTester");
 	{
 		MenuBuilder.AddMenuEntry(
-		FVRiticsMenuCommands::Get().ConnectionTest, NAME_None,
+			FVRiticsMenuCommands::Get().ConnectionTest, NAME_None,
 			FText::FromString("Connection tester"),
 			FText::FromString("Open the connection tester window"),
 			FSlateIcon()
-			);
+		);
 	}
 	MenuBuilder.EndSection();
 }
@@ -123,92 +126,100 @@ void FVRiticsEditorModule::OnConnectionTestClicked()
 TSharedRef<SDockTab> FVRiticsEditorModule::SpawnIntroductionTab(const FSpawnTabArgs& TabSpawnArgs) const
 {
 	TSharedRef<SDockTab> SpawnedTab = SNew(SDockTab)
-	  .TabRole(NomadTab)
-	  [
-	  SNew(SVerticalBox)
-		+ SVerticalBox::Slot()
-		.Padding(20)
+		.TabRole(NomadTab)
 		[
-	      SNew(SRichTextBlock)
-	      .Text(FText::FromString(TEXT("To correctly send events to VRitics' backend you need to follow the steps:\n"
-	          "1. Call the Setup node with the correct Token and AppID.\n"
-	          "2.Call the StartSession node with the name of the object that sends it for the events to start registering.\n"
-	          "3.Use the RegisterEvent node to record a failed or successful interaction attempt.\n"
-	          "4. To send packed events to the backend you need to call the SendSession node.\n"
-	          "If executed properly, all the registered events and sessions should be visible in the dashboard panel of the app with the corresponding AppID.")))
-	          ]
-	          + SVerticalBox::Slot()[
-			SNew(SButton)
+			SNew(SVerticalBox)
+			+ SVerticalBox::Slot()
+			.Padding(20)
+			[
+				SNew(SRichTextBlock)
+				.Text(FText::FromString(TEXT(
+					"To correctly send events to VRitics' backend you need to follow the steps:\n\n"
+					"1. Go to VRitics website, once registered create App to get AppId and generate Token.\n")))
+			].FillHeight(0.1f)
+			+ SVerticalBox::Slot()[
+				SNew(SButton)
 				.Text(FText::FromString(TEXT("Open VRitics website")))
 				.OnClicked_Lambda([&]()
-				{
-					const FString URL = TEXT("http://vr-dashboard.server306419.nazwa.pl/");
-					FPlatformProcess::LaunchURL(*URL, nullptr, nullptr);
-					return FReply::Handled();
-				})
-			]
-	          
-	          ];
+				             {
+					             const FString URL = TEXT("http://vr-dashboard.server306419.nazwa.pl/");
+					             FPlatformProcess::LaunchURL(*URL, nullptr, nullptr);
+					             return FReply::Handled();
+				             })
+			].VAlign(VAlign_Center).HAlign(HAlign_Center).FillHeight(0.1f)
+			+ SVerticalBox::Slot()
+			.Padding(20)
+			[
+				SNew(SRichTextBlock)
+				.Text(FText::FromString(TEXT(
+					"2. Call the Setup node with the any PlayerID. Use Token and AppID that you got from VRitics website.\n"
+					"3. Call the StartSession node with session name of your choice in the Name field. Now the events will start registering.\n"
+					"4. Use the RegisterEvent node to record a successful or failed interaction attempt. Events will be added to current session.\n"
+					"5. Call SendSession node to end current session end send events to the server.\n\n"
+					"If executed properly, all the registered events and sessions should be visible in the dashboard panel of the app with the corresponding AppID.")))
+			].FillHeight(0.8f)
+		];
 
 	return SpawnedTab;
 }
 
-TSharedRef<SDockTab> FVRiticsEditorModule::SpawnConnectionTestTab(const FSpawnTabArgs& TabSpawnArgs) const
+TSharedRef<SDockTab> FVRiticsEditorModule::SpawnConnectionTestTab(const FSpawnTabArgs& TabSpawnArgs)
 {
 	TSharedRef<SDockTab> SpawnedTab = SNew(SDockTab)
-		.TabRole(ETabRole::NomadTab)
+		.TabRole(NomadTab)
 		[
 			SNew(SVerticalBox)
 			+ SVerticalBox::Slot()[
-			SNew(SHorizontalBox) +
+				SNew(SHorizontalBox) +
 				SHorizontalBox::Slot()[
 					SNew(STextBlock).Text(FText::FromString(TEXT("AppID")))
-				].VAlign(VAlign_Center).HAlign(HAlign_Right)
- +
+				].VAlign(VAlign_Center).HAlign(HAlign_Right).AutoWidth().Padding(20)
+				+
 				SHorizontalBox::Slot()[
 					SNew(SEditableTextBox).Text(FText::FromString(FVRiticsModule::AppID))
-				].VAlign(VAlign_Center).HAlign(HAlign_Fill)
-			]
+				].VAlign(VAlign_Center).HAlign(HAlign_Fill).MaxWidth(50.0f)
+			].HAlign(HAlign_Fill).VAlign(VAlign_Top).AutoHeight()
 			+ SVerticalBox::Slot()[
-			SNew(SHorizontalBox) +
+				SNew(SHorizontalBox) +
 				SHorizontalBox::Slot()[
 					SNew(STextBlock).Text(FText::FromString(TEXT("Token")))
-				].VAlign(VAlign_Center).HAlign(HAlign_Right)
- +
+				].VAlign(VAlign_Center).HAlign(HAlign_Right).AutoWidth().Padding(20)
+				+
 				SHorizontalBox::Slot()[
 					SNew(SEditableTextBox).Text(FText::FromString(FVRiticsModule::Token))
-				].VAlign(VAlign_Center).HAlign(HAlign_Fill)
-			]
+				].VAlign(VAlign_Center).HAlign(HAlign_Fill).MaxWidth(400.0f)
+			].HAlign(HAlign_Fill).VAlign(VAlign_Top).AutoHeight()
 			+ SVerticalBox::Slot()[
-			SNew(SButton)
+				SNew(SButton)
 				.Text(FText::FromString(TEXT("TestConnection")))
 				.ContentPadding(3)
 				.OnClicked_Lambda([&]()
-				{
-					VRiticsSession::TestSessions(FVRiticsModule::AppID, FVRiticsModule::Token, FVRiticsEditorModule::RefreshResult);
-					return FReply::Handled();
-				})
+				             {
+					             VRiticsSession::TestSessions(FVRiticsModule::AppID, FVRiticsModule::Token,
+					                                          RefreshResult);
+					             return FReply::Handled();
+				             })
 			].VAlign(VAlign_Center).HAlign(HAlign_Center)
-
 			+ SVerticalBox::Slot()[
-			SNew(SScrollBox)
+				SNew(SScrollBox)
 				+ SScrollBox::Slot()
-				.VAlign(VAlign_Top)
-				.Padding(5)
+				  .VAlign(VAlign_Fill)
+				  .Padding(5)
 				[
 					SNew(SBorder)
 					.BorderBackgroundColor(FColor(192, 192, 192, 255))
 					.Padding(15.0f)
 					[
-						SNew(STextBlock).Text(Result)
-					]
+						SAssignNew(TextBlock, STextBlock).Text(Result)
+					].VAlign(VAlign_Fill)
 				]
-			]
+			].VAlign(VAlign_Fill)/*.FillHeight(0.8f)*/
 		];
 	return SpawnedTab;
 }
 
-void FVRiticsEditorModule::RefreshResult(FString Text)
+const void FVRiticsEditorModule::RefreshResult(const FString& Text)
 {
 	Result = FText::FromString(Text);
+	TextBlock.Get()->SetText(Result);
 }
