@@ -1,3 +1,5 @@
+// Copyright 2024 Vritics sp. z o.o.
+
 #pragma once
 
 #include "Modules/ModuleManager.h"

@@ -1,4 +1,6 @@
-﻿#include "VRiticsSession.h"
+﻿// Copyright 2024 Vritics sp. z o.o.
+
+#include "VRiticsSession.h"
 
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "HttpModule.h"

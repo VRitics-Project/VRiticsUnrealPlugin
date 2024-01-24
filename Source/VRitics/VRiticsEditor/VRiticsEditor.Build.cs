@@ -1,4 +1,4 @@
-// Some copyright should be here...
+// Copyright 2024 Vritics sp. z o.o.
 
 using UnrealBuildTool;
 

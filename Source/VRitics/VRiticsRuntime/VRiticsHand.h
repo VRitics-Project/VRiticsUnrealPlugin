@@ -1,4 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Copyright 2024 Vritics sp. z o.o.
 
 #pragma once
 
@@ -6,21 +6,16 @@
 #include "UObject/Interface.h"
 #include "VRiticsHand.generated.h"
 
-// This class does not need to be modified.
 UINTERFACE()
 class UVRiticsHand : public UInterface
 {
 	GENERATED_BODY()
 };
 
-/**
- * 
- */
 class VRITICS_API IVRiticsHand
 {
 	GENERATED_BODY()
 
-	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "VRitics|Hand")

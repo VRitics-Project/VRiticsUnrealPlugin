@@ -1,5 +1,6 @@
-﻿#include "VRiticsMenuCommands.h"
+﻿// Copyright 2024 Vritics sp. z o.o.
 
+#include "VRiticsMenuCommands.h"
 
 void FVRiticsMenuCommands::RegisterCommands()
 {

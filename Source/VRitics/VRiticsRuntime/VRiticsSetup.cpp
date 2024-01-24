@@ -1,4 +1,6 @@
-﻿#include "VRiticsSetup.h"
+﻿// Copyright 2024 Vritics sp. z o.o.
+
+#include "VRiticsSetup.h"
 #include "VRitics.h"
 
 FString FVRiticsModule::PlayerID;

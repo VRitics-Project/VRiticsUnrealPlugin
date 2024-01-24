@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿// Copyright 2024 Vritics sp. z o.o.
+
+#pragma once
 
 #include "CoreMinimal.h"
 #include "VRiticsEvent.h"

@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿// Copyright 2024 Vritics sp. z o.o.
+
+#pragma once
 
 class FVRiticsMenuCommands final : public TCommands<FVRiticsMenuCommands>
 {
