@@ -213,7 +213,7 @@ TSharedRef<SDockTab> FVRiticsEditorModule::SpawnConnectionTestTab(const FSpawnTa
 						SAssignNew(TextBlock, STextBlock).Text(Result)
 					].VAlign(VAlign_Fill)
 				]
-			].VAlign(VAlign_Fill)/*.FillHeight(0.8f)*/
+			].VAlign(VAlign_Fill)
 		];
 	return SpawnedTab;
 }

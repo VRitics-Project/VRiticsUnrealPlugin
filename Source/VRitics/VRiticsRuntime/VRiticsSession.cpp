@@ -44,12 +44,10 @@ FString ExtractTitleFromHtml(const FString& HtmlString)
 	FRegexMatcher TitleMatcher(TitlePattern, HtmlString);
 	if (TitleMatcher.FindNext())
 	{
-		// Extract the content of the <title> tag
 		FString TitleContent = TitleMatcher.GetCaptureGroup(1);
 		return TitleContent;
 	}
 
-	// Return an empty string if <title> tag is not found
 	return FString();
 }
 
@@ -70,7 +68,7 @@ void VRiticsSession::SendSession(const FString& PlayerId, const FString& AppId, 
 	RequestContent.Append("\",\n");
 
 	RequestContent.Append("\"device\": \"");
-	FName DeviceName = UHeadMountedDisplayFunctionLibrary::GetHMDDeviceName();
+	const FName DeviceName = UHeadMountedDisplayFunctionLibrary::GetHMDDeviceName();
 	RequestContent.Append(DeviceName.ToString());
 	RequestContent.Append("\",\n");
 
