@@ -39,12 +39,12 @@ void VRiticsSession::RegisterEvent(FString name, FVector3f position, bool isSucc
 
 FString ExtractTitleFromHtml(const FString& HtmlString)
 {
-	const FRegexPattern TitlePattern(TEXT("<title>(.*?)</title>"));
+	const int32 TitleStartIndex = HtmlString.Find(TEXT("<title>"), ESearchCase::IgnoreCase);
+	const int32 TitleEndIndex = HtmlString.Find(TEXT("</title>"), ESearchCase::IgnoreCase);
 
-	FRegexMatcher TitleMatcher(TitlePattern, HtmlString);
-	if (TitleMatcher.FindNext())
+	if (TitleStartIndex != INDEX_NONE && TitleEndIndex != INDEX_NONE && TitleEndIndex > TitleStartIndex)
 	{
-		FString TitleContent = TitleMatcher.GetCaptureGroup(1);
+		FString TitleContent = HtmlString.Mid(TitleStartIndex + 7, TitleEndIndex - (TitleStartIndex + 7));
 		return TitleContent;
 	}
 

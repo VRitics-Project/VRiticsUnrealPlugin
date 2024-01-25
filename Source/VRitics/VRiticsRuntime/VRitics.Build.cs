@@ -15,17 +15,7 @@ public class VRitics : ModuleRules
 				"CoreUObject",
 				"Engine",
 				"XRBase",
-				"Http"
-			}
-			);
-			
-		
-		PrivateDependencyModuleNames.AddRange(
-			new string[]
-			{
-				"Slate",
-				"SlateCore",
-				"XRBase"
+				"HTTP"
 			}
 			);
 		
