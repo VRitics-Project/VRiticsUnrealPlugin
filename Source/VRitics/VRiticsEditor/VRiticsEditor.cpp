@@ -11,6 +11,7 @@
 #include "VRiticsMenuCommands.h"
 #include "VRitics/VRiticsRuntime/VRitics.h"
 #include "VRitics/VRiticsRuntime/VRiticsSession.h"
+#include "VRitics/VRiticsRuntime/VRiticsSetup.h"
 
 IMPLEMENT_MODULE(FVRiticsEditorModule, VRiticsEditor)
 
@@ -53,9 +54,11 @@ void FVRiticsEditorModule::StartupModule()
 	LevelEditorModule.GetMenuExtensibilityManager()->AddExtender(MyExtender);
 
 	const TSharedRef<FGlobalTabmanager> TabManager = FGlobalTabmanager::Get();
+	TabManager->RegisterDefaultTabWindowSize(IntroductionTabName, FVector2D(400, 300));
 	TabManager->RegisterNomadTabSpawner(IntroductionTabName,
 	                                    FOnSpawnTab::CreateRaw(this, &FVRiticsEditorModule::SpawnIntroductionTab))
 	          .SetDisplayName(FText::FromString(TEXT("Introduction"))).SetMenuType(ETabSpawnerMenuType::Hidden);
+	TabManager->RegisterDefaultTabWindowSize(ConnectionTestTabName, FVector2D(100, 100));
 	TabManager->RegisterNomadTabSpawner(ConnectionTestTabName,
 	                                    FOnSpawnTab::CreateRaw(this, &FVRiticsEditorModule::SpawnConnectionTestTab))
 	          .SetDisplayName(FText::FromString(TEXT("Connection Test"))).SetMenuType(ETabSpawnerMenuType::Hidden);
@@ -142,7 +145,7 @@ TSharedRef<SDockTab> FVRiticsEditorModule::SpawnIntroductionTab(const FSpawnTabA
 				.Text(FText::FromString(TEXT("Open VRitics website")))
 				.OnClicked_Lambda([&]()
 				             {
-					             const FString URL = TEXT("http://vr-dashboard.server306419.nazwa.pl/");
+					             const FString URL = TEXT("https://dashboard.vritics.com/");
 					             FPlatformProcess::LaunchURL(*URL, nullptr, nullptr);
 					             return FReply::Handled();
 				             })
@@ -186,7 +189,7 @@ TSharedRef<SDockTab> FVRiticsEditorModule::SpawnConnectionTestTab(const FSpawnTa
 				].VAlign(VAlign_Center).HAlign(HAlign_Right).AutoWidth().Padding(20)
 				+
 				SHorizontalBox::Slot()[
-					SNew(SEditableTextBox).Text(FText::FromString(FVRiticsModule::AppID))
+					SNew(SEditableTextBox).Text(FText::FromString(FVRiticsModule::AppID)).OnTextCommitted(FOnTextCommitted::CreateLambda(&UVRiticsSetup::SetAppId))
 				].VAlign(VAlign_Center).HAlign(HAlign_Fill).MaxWidth(50.0f)
 			].HAlign(HAlign_Fill).VAlign(VAlign_Top).AutoHeight()
 			+ SVerticalBox::Slot()[
@@ -196,7 +199,7 @@ TSharedRef<SDockTab> FVRiticsEditorModule::SpawnConnectionTestTab(const FSpawnTa
 				].VAlign(VAlign_Center).HAlign(HAlign_Right).AutoWidth().Padding(20)
 				+
 				SHorizontalBox::Slot()[
-					SNew(SEditableTextBox).Text(FText::FromString(FVRiticsModule::Token))
+					SNew(SEditableTextBox).Text(FText::FromString(FVRiticsModule::Token)).OnTextCommitted(FOnTextCommitted::CreateLambda(&UVRiticsSetup::SetToken))
 				].VAlign(VAlign_Center).HAlign(HAlign_Fill).MaxWidth(400.0f)
 			].HAlign(HAlign_Fill).VAlign(VAlign_Top).AutoHeight()
 			+ SVerticalBox::Slot()[
@@ -205,7 +208,8 @@ TSharedRef<SDockTab> FVRiticsEditorModule::SpawnConnectionTestTab(const FSpawnTa
 				.ContentPadding(3)
 				.OnClicked_Lambda([&]()
 				             {
-					             VRiticsSession::TestSessions(FVRiticsModule::AppID, FVRiticsModule::Token,
+								 RefreshResult(TEXT("..."));
+					             VRiticsSession::TestSessions(UVRiticsSetup::GetAppId(), UVRiticsSetup::GetToken(),
 					                                          RefreshResult);
 					             return FReply::Handled();
 				             })

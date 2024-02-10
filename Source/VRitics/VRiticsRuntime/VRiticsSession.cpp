@@ -68,8 +68,8 @@ void VRiticsSession::SendSession(const FString& PlayerId, const FString& AppId, 
 	RequestContent.Append("\",\n");
 
 	RequestContent.Append("\"device\": \"");
-	const FName DeviceName = UHeadMountedDisplayFunctionLibrary::GetHMDDeviceName();
-	RequestContent.Append(DeviceName.ToString());
+	RequestContent.Append(UHeadMountedDisplayFunctionLibrary::IsHeadMountedDisplayConnected()
+		? UHeadMountedDisplayFunctionLibrary::GetHMDDeviceName().ToString() : "None");
 	RequestContent.Append("\",\n");
 
 	RequestContent.Append("\"data\": [\n");
@@ -89,7 +89,7 @@ void VRiticsSession::SendSession(const FString& PlayerId, const FString& AppId, 
 	RequestContent.Append("}\n");
 	RequestContent.Append("}\n");
 
-	FString uri = "http://vr-collector.server306419.nazwa.pl/api/apps/" + AppId + "/raycasts";
+	FString uri = "https://collector.vritics.com/api/apps/" + AppId + "/raycasts";
 
 	FHttpModule& httpModule = FHttpModule::Get();
 
@@ -112,7 +112,7 @@ void VRiticsSession::SendSession(const FString& PlayerId, const FString& AppId, 
 			FString Response = "";
 			if (connectedSuccessfully)
 			{
-				Response = ExtractTitleFromHtml(pResponse->GetContentAsString());
+				Response = pResponse->GetContentAsString();
 			}
 			else
 			{

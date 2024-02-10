@@ -14,4 +14,8 @@ public:
 	UVRiticsSetup();
 	~UVRiticsSetup();
 	static void Init(FString, FString, FString);
+	static void SetToken(const FText& NewText, ETextCommit::Type TextType);
+	static void SetAppId(const FText& NewText, ETextCommit::Type TextType);
+	static FString GetAppId();
+	static FString GetToken();
 };
